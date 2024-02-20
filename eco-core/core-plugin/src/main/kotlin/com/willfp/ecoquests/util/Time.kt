@@ -19,18 +19,18 @@ fun formatDuration(minutes: Int): String {
     val parts = mutableListOf<String>()
 
     if (totalMonths > 0) {
-        parts.add("${totalMonths}mo")
+        parts.add("${totalMonths}月")
     }
 
     if (remainingDays > 0) {
-        parts.add("${remainingDays}d")
+        parts.add("${remainingDays}天")
     }
 
     if (remainingHours > 0) {
-        parts.add("${remainingHours}h")
+        parts.add("${remainingHours}时")
     }
 
-    parts.add("${remainingMinutes}m")
+    parts.add("${remainingMinutes}分")
 
     return parts.joinToString(" ")
 }
