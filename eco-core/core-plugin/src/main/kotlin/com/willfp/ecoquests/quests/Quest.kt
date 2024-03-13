@@ -49,28 +49,8 @@ class Quest(
 
     private val guiItem = Items.lookup(config.getString("gui.item")).item
 
-    val slot = slot({ player, _ ->
-        guiItem.clone().modify {
-            addLoreLines(
-                addPlaceholdersInto(
-                    plugin.configYml.getStrings("quests.icon.lore"),
-                    player
-                )
-            )
-
-            addLoreLines(
-                startConditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder)
-            )
-
-            setDisplayName(
-                addPlaceholdersInto(
-                    listOf(plugin.configYml.getString("quests.icon.name")),
-                    player
-                ).first()
-            )
-        }
-    }) {
-
+    val slot = slot { player, _ ->
+        buildIcon(player)
     }
 
     val showsInGui = config.getBool("gui.enabled")
@@ -147,7 +127,7 @@ class Quest(
         ViolationContext(plugin, "quest $id start-effects")
     )
 
-    private val startConditions = Conditions.compile(
+    val startConditions = Conditions.compile(
         config.getSubsections("start-conditions"),
         ViolationContext(plugin, "quest $id start-conditions")
     )
@@ -473,5 +453,25 @@ class Quest(
                 player = player
             )
         ).lineWrap(plugin.configYml.getInt("quests.icon.line-wrap"), true)
+    }
+
+    fun buildIcon(player: Player) = guiItem.clone().modify {
+        addLoreLines(
+            addPlaceholdersInto(
+                plugin.configYml.getStrings("quests.icon.lore"),
+                player
+            )
+        )
+
+        addLoreLines(
+            startConditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder)
+        )
+
+        setDisplayName(
+            addPlaceholdersInto(
+                listOf(plugin.configYml.getString("quests.icon.name")),
+                player
+            ).first()
+        )
     }
 }

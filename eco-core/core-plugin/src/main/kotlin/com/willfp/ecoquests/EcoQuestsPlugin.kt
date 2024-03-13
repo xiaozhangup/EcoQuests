@@ -7,6 +7,7 @@ import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.PlaceholderContext
 import com.willfp.eco.core.placeholder.templates.SimpleInjectablePlaceholder
 import com.willfp.eco.util.toNiceString
+import com.willfp.ecoquests.api.PlayerQuestAPI
 import com.willfp.ecoquests.commands.CommandEcoQuests
 import com.willfp.ecoquests.commands.CommandQuests
 import com.willfp.ecoquests.gui.PreviousQuestsGUI
@@ -24,6 +25,7 @@ import com.willfp.ecoquests.libreforge.TriggerCompleteQuest
 import com.willfp.ecoquests.libreforge.TriggerCompleteTask
 import com.willfp.ecoquests.libreforge.TriggerGainTaskXp
 import com.willfp.ecoquests.libreforge.TriggerStartQuest
+import com.willfp.ecoquests.libreforge.custom.TriggerTherapyVillager
 import com.willfp.ecoquests.quests.QuestCompleteDisplay
 import com.willfp.ecoquests.quests.QuestStartDisplay
 import com.willfp.ecoquests.quests.Quests
@@ -53,6 +55,9 @@ class EcoQuestsPlugin : LibreforgePlugin() {
         Triggers.register(TriggerCompleteTask)
         Triggers.register(TriggerGainTaskXp)
         Triggers.register(TriggerStartQuest)
+
+        // 自定义触发器注册
+        Triggers.register(TriggerTherapyVillager)
 
         PlayerlessPlaceholder(this, "quests_amount") {
             Quests.values().size.toString()
